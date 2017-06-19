@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	
+	<h:form>
+				<p:panelMenu id="menuPrincipal">
+					<p:submenu label="Iníciar">
+						<p:menuitem value="Sair" icon="ui-icon-power"
+							actionListener="#{usuarioBean.encerraSessao}" />
+
+						<p:menuitem value="Mudar Senha" icon="ui-icon-key"
+							outcome="/pages/editarSenha.xhtml" />
+					</p:submenu>
+
+					<p:submenu label="Sócios">
+						<p:menuitem icon="ui-icon-person" value="Gerenciar"
+							outcome="/pages/socio.xhtml"/>
+					</p:submenu>
+					
+					<p:submenu label="Usuários">
+						<p:menuitem value="Gerenciar Perfil" icon="ui-icon-person"
+							outcome="/pages/usuarioPesquisa.xhtml"/>
+
+					</p:submenu>
+					
+					<p:submenu label="Financeiro">
+						<p:submenu label="Receitas">
+							<p:menuitem value="Tipos de Recebimento" icon="ui-icon-tag"
+								outcome="/pages/tipoTarifa.xhtml"/>
+							<p:menuitem value="Recebimentos" outcome="/pages/tarifa.xhtml" icon="ui-icon-tag"/>
+							<p:menuitem value="Receitas Eventuais" outcome="/pages/recebimentos_eventuais.xhtml" icon="ui-icon-tag"/>
+							<p:menuitem value="Autorizações de Valores" icon="ui-icon-script"
+								outcome="/pages/valorAutorizadoPesquisa.xhtml"/>
+							<p:submenu label="Recibos">
+								<p:menuitem value="Emissão" outcome="/pages/recibo.xhtml" icon="fa fa-list-alt"/>
+								<p:menuitem value="Cancelamento" outcome="/pages/recibo_cancelamento.xhtml" icon="fa fa-list-alt"/>
+							</p:submenu>
+						</p:submenu>
+
+						<p:submenu label="Despesas">
+							<p:menuitem value="Tipos de Despesas" icon="ui-icon-tag"
+								outcome="/pages/tipoDespesa.xhtml"/>
+								
+							<p:menuitem value="Fornecedores" icon="fa fa-truck"
+								outcome="/pages/fornecedor.xhtml"/>
+							<p:menuitem value="Contas à Pagar" outcome="/pages/contas_a_pagar.xhtml"/>
+							
+						</p:submenu>
+					</p:submenu>
+
+					<p:submenu label="Estoque">
+						<p:menuitem value="Categorias" outcome="/pages/categoria.xhtml"/>
+
+						<p:menuitem value="Produtos" outcome="/pages/produto.xhtml"/>
+
+					</p:submenu>
+
+					<p:submenu label="Vendas">
+						<p:menuitem value="Vendas" outcome="/pages/venda.xhtml"/>
+					</p:submenu>
+
+					<p:submenu label="Rituais">
+						<p:menuitem value="Obrigações" outcome="/pages/obrigacao.xhtml"/>
+
+						<p:menuitem value="Gerenciar Obrigações"
+							outcome="/pages/obrigacao_mediunica.xhtml"/>
+					</p:submenu>
+					
+					<p:submenu label="Calendário Interno">
+						<p:menuitem value="Gerenciar" icon="fa fa-calendar" outcome="/pages/calendario_interno.xhtml"/>
+					</p:submenu>
+
+					<p:submenu label="Controladoria">
+						<p:menuitem value="Gerenciar" outcome="/pages/controladoria.xhtml"/>
+					</p:submenu>
+
+					<p:submenu label="Ocorrencias">
+						<p:menuitem value="Gerenciar" outcome="/pages/ocorrencia.xhtml"/>
+					</p:submenu>
+
+					<p:submenu label="Terreiro">
+						<p:menuitem value="Gerenciar" outcome="/pages/terreiro.xhtml"/>
+					</p:submenu>
+					
+					<p:submenu label="Academico">
+						<p:menuitem value="Cursos" outcome="/pages/cursos.xhtml"/>
+						<p:menuitem value="Turmas" outcome="/pages/turmas.xhtml"/>
+						<p:menuitem value="Matrículas" outcome="/pages/emManutencao.xhtml"/>
+						<p:menuitem value="Frequencia de Alunos" outcome="/pages/emManutencao.xhtml"/>
+					</p:submenu>
+
+					<p:submenu label="Relatórios">
+						<p:menuitem value="2ª via de Recibos"
+							outcome="/pages/segundaVia.xhtml" />
+							
+						<p:menuitem value="Recibos Emitidos por Período"
+							outcome="/pages/relatorioPorPeriodo.xhtml" />
+
+						<p:menuitem value="Inadimplentes"
+							outcome="/pages/emManutencao.xhtml" />
+
+						<p:menuitem value="Adimplentes"
+							outcome="/pages/adimplentes.xhtml" />
+
+						<p:menuitem value="Caixa Geral"
+							outcome="/pages/caixaGeralPorPeriodo.xhtml" />
+							
+						<p:menuitem value="Fluxo de Caixa"
+							outcome="/pages/relatorioFluxoDeCaixa.xhtml" />
+							
+						<p:menuitem value="Contas à Pagar"
+							outcome="/pages/relatorioContasPagar.xhtml" />
+							
+						<p:menuitem value="Contas à Receber"
+							outcome="/pages/contas_a_receber.xhtml" />
+							
+
+						<p:submenu label="Auditoria">
+							<p:menuitem value="Autorização de Valores"
+								outcome="/pages/auditoriaAutorizacaoDeValor.xhtml" />
+								
+							<p:menuitem value="Usuários - Perfil"
+								outcome="/pages/auditoriaPerfil.xhtml" />
+						</p:submenu>
+					</p:submenu>
+					
+					<p:submenu label="Sobre">
+						<p:menuitem value="Sobre SGT" icon="ui-icon-person"
+							outcome="/pages/sobre.xhtml"/>
+
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+	
+</ui:composition>

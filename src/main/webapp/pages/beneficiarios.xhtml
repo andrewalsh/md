@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmSocio">
+
+			<p:tabView id="viewSocio" activeIndex="0">
+				<p:tab title="Beneficiados">
+					<h:panelGrid columns="2" id="pnlSocio">
+
+						<h:outputText value="CPF:" />
+						<p:inputMask mask="99999999999" size="15" value="#{beneficiadoBean.beneficiado.cpf}"/>
+
+						<h:outputText value="Nome:"/>
+						<p:inputText  size="40" value="#{beneficiadoBean.nome}"/>
+
+						<h:outputText value="Nascimento:" />
+						<p:calendar size="10" value="#{beneficiadoBean.beneficiado.nascimento}"
+							locale="pt_BR" navigator="true" pattern="dd/MM/yyyy"
+							yearRange="1900:2020" />
+							
+						<h:outputText value="Sexo:" />
+						<p:selectOneMenu value="#{beneficiadoBean.beneficiado.sexo}">
+							<f:selectItem itemLabel="Selecione..." />
+							<f:selectItem itemLabel="Feminino" itemValue="F" />
+							<f:selectItem itemLabel="Masculino" itemValue="M" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Tel. Celular:" />
+						<p:inputMask mask="(99)99999-9999" size="15" value="#{beneficiadoBean.beneficiado.telefoneCelular}"/>
+
+						<h:outputText value="Tel. Residêncial:" />
+						<p:inputMask mask="(99)9999-9999" size="15" value="#{beneficiadoBean.beneficiado.telefoneResidencia}"/>
+
+						<h:outputText value="Endereço Residencial:" />
+						<p:inputText size="50" value="#{beneficiadoBean.endereco}"/>
+						
+						<h:outputText value="Número:" />
+						<p:inputText size="20" value="#{beneficiadoBean.numero}"/>
+						
+						<h:outputText value="Bairro:" />
+						<p:inputText size="20" value="#{beneficiadoBean.bairro}"/>
+						
+						<h:outputText value="CEP:" />
+						<p:inputText size="20" value="#{beneficiadoBean.cep}"/>
+						
+						<h:outputText value="Cidade:" />
+						<p:inputText size="20" value="#{beneficiadoBean.cidade}"/>
+						
+						<h:outputText value="Estado:" />
+						<p:selectOneMenu value="#{beneficiadoBean.uf}">
+							<f:selectItem itemLabel="Selecione..." />
+							<f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ"/>
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+
+				</p:tab>
+				
+						
+			</p:tabView>
+
+			<h:panelGrid columns="4" id="pnlOpcao">
+
+				<p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{beneficiadoBean.salvar}" update="msg"/>
+
+				<p:commandButton value="Atualizar" icon="ui-icon-pencil" actionListener="#{beneficiadoBean.verificarID}" update="msg"/>
+					
+			</h:panelGrid>
+			<p:separator />
+			
+			<h:panelGrid columns="5">
+				<p:outputLabel value="Pesquisar pelo campo"/>
+				<p:selectOneMenu value="#{beneficiadoBean.parametroCampo}">
+					<f:selectItem itemLabel="Nome" itemValue="nome"/>
+					<f:selectItem itemLabel="Enderço" itemValue="endereco"/>
+					<f:selectItem itemLabel="Bairro" itemValue="bairro"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="que contém o valor:"/>
+				<p:inputText size="50" value="#{beneficiadoBean.valorCampo}"/>
+				<p:commandButton value="Pesquisar" actionListener="#{beneficiadoBean.pesquisar}" update="frmSocio:tbl"/>
+			</h:panelGrid>
+			
+			<p:dataTable emptyMessage="Não há registros na lista"
+				paginator="true" rows="10" var="lista" id="tbl"
+				reflow="true" value="#{beneficiadoBean.listaBeneficiado}" >
+				<f:facet name="header">
+					Beneficiados - Resultado da Pesquisa
+				</f:facet>
+
+				<p:column headerText="Nome"
+					style="width: 18%">
+					<h:outputLabel value="#{lista.id.nome}"/>
+				</p:column>
+				<p:column headerText="CPF"
+					style="width: 8%; text-align:center">
+					<h:outputLabel value="#{lista.cpf}"/>
+				</p:column>
+				<p:column headerText="Bairro" style="width: 8%">
+					<h:outputLabel value="#{lista.id.logradouro.bairro}"/>
+				</p:column>
+				<p:column>
+					<p:commandButton value="Selecionar" actionListener="#{beneficiadoBean.adicionar(lista)}" update="frmSocio"/>
+				</p:column>
+				<p:column style="width: 3%; text-align:center">
+					<h:commandLink
+						target="_blank">
+						<p:graphicImage library="images" name="fileprint.png" />
+					</h:commandLink>
+				</p:column>
+
+
+			</p:dataTable>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

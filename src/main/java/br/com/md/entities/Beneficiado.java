@@ -106,5 +106,6 @@ public class Beneficiado implements Serializable{
 		return "Beneficiado [id=" + id + ", cpf=" + cpf + ", telefoneResidencia=" + telefoneResidencia
 				+ ", telefoneCelular=" + telefoneCelular + ", sexo=" + sexo + ", nascimento=" + nascimento + "]";
 	}
+	
 
 }

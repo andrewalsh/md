@@ -79,7 +79,7 @@ public class BeneficiadoID implements Serializable{
 
 	@Override
 	public String toString() {
-		return "BeneficiadoID [nome=" + nome + ", logradouro=" + logradouro + "]";
+		return "Nome: "+nome+" "+logradouro;
 	}
 
 

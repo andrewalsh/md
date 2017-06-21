@@ -92,8 +92,7 @@ public class Logradouro {
 
 	@Override
 	public String toString() {
-		return "Logradouro [endereco=" + endereco + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade
-				+ ", uf=" + uf + ", cep=" + cep + "]";
+		return "Endereço: "+endereco+" ,número: "+numero+" ,Bairro: "+bairro+" ,Cidade: "+cidade+" ,CEP: "+cep+" UF: "+uf;
 	}
 	
 	

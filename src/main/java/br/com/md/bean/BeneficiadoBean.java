@@ -30,9 +30,12 @@ public class BeneficiadoBean implements Serializable{
 	private String parametroCampo;
 	private String valorCampo;
 	
+	
 	public Beneficiado getBeneficiado() {
 		if(this.beneficiado == null){
 			this.beneficiado = new Beneficiado();
+			this.beneficiado.setId(new BeneficiadoID());
+			this.beneficiado.getId().setLogradouro(new Logradouro());
 		}
 		return beneficiado;
 	}
@@ -104,11 +107,25 @@ public class BeneficiadoBean implements Serializable{
 	public void salvar(){
 		try {
 			BeneficiadoDAO dao = new BeneficiadoDAO();
+			populate();
 			beneficiado.setId(new BeneficiadoID(nome, new Logradouro(endereco, numero, bairro, cidade, uf, cep)));
 			dao.salvar(beneficiado);
 			FacesUtilBean.msgInfo("Beneficiado(a) cadastrado(a) com sucesso!");
 		} catch (RuntimeException e) {
 			FacesUtilBean.msgErro("Ocorreu um erro ao tentar cadastrar o(a) beneficiado(a): [ "+e.getMessage()+" ]");
+			e.printStackTrace();
+		}
+	}
+	
+	public void atualizar(){
+		try {
+			BeneficiadoDAO dao = new BeneficiadoDAO();
+			populate();
+			dao.editar(beneficiado);
+			FacesUtilBean.msgInfo("Dados cadastrais do(a) beneficiado(a) atualizados com sucesso!");
+		} catch (RuntimeException e) {
+			FacesUtilBean.msgErro("Ocorreu um erro ao tentar atualizar o cadastro do(a) beneficiado(a): [ "+e.getMessage()+" ]");
+			e.printStackTrace();
 		}
 	}
 	
@@ -148,6 +165,36 @@ public class BeneficiadoBean implements Serializable{
 	
 	public void adicionar(Beneficiado beneficiado){
 		this.beneficiado = beneficiado;
+		System.out.println(this.beneficiado.toString());
+	}
+	
+	private void populate(){
+		this.nome = this.beneficiado.getId().getNome();
+		this.endereco = this.beneficiado.getId().getLogradouro().getEndereco();
+		this.numero = this.beneficiado.getId().getLogradouro().getNumero();
+		this.bairro = this.beneficiado.getId().getLogradouro().getBairro();
+		this.cidade = this.beneficiado.getId().getLogradouro().getCidade();
+		this.uf = this.beneficiado.getId().getLogradouro().getUf();
+		this.cep = this.beneficiado.getId().getLogradouro().getCep();
+		this.beneficiado.getCpf().replaceAll("[.-]", "");
+		
+		if(this.beneficiado.getTelefoneResidencia().length() < 9){
+			this.beneficiado.setTelefoneResidencia(null);
+		}else{
+			this.beneficiado.getTelefoneResidencia().replaceAll("[-]", "");
+		}
+		
+		if(this.beneficiado.getTelefoneCelular1().length() < 10){
+			this.beneficiado.setTelefoneCelular1(null);
+		}else{
+			this.beneficiado.getTelefoneCelular1().replaceAll("[-]", "");
+		}
+		
+		if(this.beneficiado.getTelefoneCelular2().length() < 10){
+			this.beneficiado.setTelefoneCelular2(null);
+		}else{
+			this.beneficiado.getTelefoneCelular2().replaceAll("[-]", "");
+		}
 	}
 	
 

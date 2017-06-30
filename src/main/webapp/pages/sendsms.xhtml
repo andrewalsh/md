@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			<f:event listener="#{smsBean.listarBairros}" type="preRenderView"/>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmSms">
+
+			<p:tabView id="viewSms" activeIndex="0">
+				<p:tab title="Envio de SMS">
+					<h:panelGrid>
+						<p:outputLabel value="Você possui, #{smsBean.smsDisponivel} SMS(s) disponível(eis) para envio"/>
+					</h:panelGrid>
+		
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Pesquisar por bairro" />
+						<p:selectOneMenu value="#{smsBean.bairro}" filter="true">
+							<f:selectItem itemLabel="Selecione..." itemValue=""/>
+							<f:selectItems value="#{smsBean.bairros}"
+								var="bairro" itemValue="#{bairro}" itemLabel="#{bairro}"/>
+						</p:selectOneMenu>
+						<p:commandButton value="Pesquisar"
+							actionListener="#{smsBean.pesquisar}" update=":msg :frmSms"/>
+					</h:panelGrid>
+					<h:panelGrid id="pnlCont">
+						<p:outputLabel value="Foram listados #{smsBean.totalTelefones} registros na pesquisa!"/>
+					</h:panelGrid>
+					
+					<p:separator />
+					<h:panelGrid columns="2" id="pnlSms">
+						<p:inputTextarea value="#{smsBean.mensagem}" rows="5"
+							cols="80" counter="cont" maxlength="160" placeholder="Digite aqui o texto do SMS. Não utilize acentos!"
+							counterTemplate="{0} caracter(es) restante(s)">
+						</p:inputTextarea>
+						<p:outputLabel id="cont" />
+						<p:commandButton value="Enviar SMS" actionListener="#{smsBean.criarLista}" update="msg :frmSms"/>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

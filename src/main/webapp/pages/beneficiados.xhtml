@@ -18,12 +18,12 @@
 			<p:tabView id="viewSocio" activeIndex="0">
 				<p:tab title="Beneficiados">
 					<h:panelGrid columns="2" id="pnlSocio">
-
-						<h:outputText value="CPF:" />
-						<p:inputMask mask="99999999999" size="15" value="#{beneficiadoBean.beneficiado.cpf}"/>
-
+					
 						<h:outputText value="Nome:"/>
-						<p:inputText  size="40" value="#{beneficiadoBean.nome}"/>
+						<p:inputText  size="40" value="#{beneficiadoBean.beneficiado.id.nome}"/>
+						
+						<h:outputText value="CPF:" />
+						<p:inputMask mask="999.999.999-99" size="15" value="#{beneficiadoBean.beneficiado.cpf}"/>
 
 						<h:outputText value="Nascimento:" />
 						<p:calendar size="10" value="#{beneficiadoBean.beneficiado.nascimento}"
@@ -37,29 +37,32 @@
 							<f:selectItem itemLabel="Masculino" itemValue="M" />
 						</p:selectOneMenu>
 
-						<h:outputText value="Tel. Celular:" />
-						<p:inputMask mask="(99)99999-9999" size="15" value="#{beneficiadoBean.beneficiado.telefoneCelular}"/>
+						<h:outputText value="Tel. Celular1:" />
+						<p:inputMask mask="99999-9999" size="15" value="#{beneficiadoBean.beneficiado.telefoneCelular1}"/>
+						
+						<h:outputText value="Tel. Celular2:" />
+						<p:inputMask mask="99999-9999" size="15" value="#{beneficiadoBean.beneficiado.telefoneCelular2}"/>
 
 						<h:outputText value="Tel. Residêncial:" />
-						<p:inputMask mask="(99)9999-9999" size="15" value="#{beneficiadoBean.beneficiado.telefoneResidencia}"/>
+						<p:inputMask mask="9999-9999" size="15" value="#{beneficiadoBean.beneficiado.telefoneResidencia}"/>
 
 						<h:outputText value="Endereço Residencial:" />
-						<p:inputText size="50" value="#{beneficiadoBean.endereco}"/>
+						<p:inputText size="50" value="#{beneficiadoBean.beneficiado.id.logradouro.endereco}"/>
 						
 						<h:outputText value="Número:" />
-						<p:inputText size="20" value="#{beneficiadoBean.numero}"/>
+						<p:inputText size="20" value="#{beneficiadoBean.beneficiado.id.logradouro.numero}"/>
 						
 						<h:outputText value="Bairro:" />
-						<p:inputText size="20" value="#{beneficiadoBean.bairro}"/>
+						<p:inputText size="20" value="#{beneficiadoBean.beneficiado.id.logradouro.bairro}"/>
 						
 						<h:outputText value="CEP:" />
-						<p:inputText size="20" value="#{beneficiadoBean.cep}"/>
+						<p:inputText size="20" value="#{beneficiadoBean.beneficiado.id.logradouro.cep}"/>
 						
 						<h:outputText value="Cidade:" />
-						<p:inputText size="20" value="#{beneficiadoBean.cidade}"/>
+						<p:inputText size="20" value="#{beneficiadoBean.beneficiado.id.logradouro.cidade}"/>
 						
 						<h:outputText value="Estado:" />
-						<p:selectOneMenu value="#{beneficiadoBean.uf}">
+						<p:selectOneMenu value="#{beneficiadoBean.beneficiado.id.logradouro.uf}">
 							<f:selectItem itemLabel="Selecione..." />
 							<f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ"/>
 						</p:selectOneMenu>
@@ -75,7 +78,7 @@
 
 				<p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{beneficiadoBean.salvar}" update="msg"/>
 
-				<p:commandButton value="Atualizar" icon="ui-icon-pencil" actionListener="#{beneficiadoBean.verificarID}" update="msg"/>
+				
 					
 			</h:panelGrid>
 			<p:separator />
@@ -93,33 +96,30 @@
 			</h:panelGrid>
 			
 			<p:dataTable emptyMessage="Não há registros na lista"
-				paginator="true" rows="10" var="lista" id="tbl"
+				paginator="true" rows="5" var="lista" id="tbl"
 				reflow="true" value="#{beneficiadoBean.listaBeneficiado}" >
 				<f:facet name="header">
-					Beneficiados - Resultado da Pesquisa
+					Resultado da Pesquisa - <p:outputLabel value="#{beneficiadoBean.listaBeneficiado.size()} registro(s)"/>
 				</f:facet>
 
 				<p:column headerText="Nome"
 					style="width: 18%">
 					<h:outputLabel value="#{lista.id.nome}"/>
 				</p:column>
-				<p:column headerText="CPF"
+				<p:column headerText="Celular"
 					style="width: 8%; text-align:center">
-					<h:outputLabel value="#{lista.cpf}"/>
+					<h:outputLabel value="#{lista.telefoneCelular1}"/>
+				</p:column>
+				<p:column headerText="Residencia"
+					style="width: 8%; text-align:center">
+					<h:outputLabel value="#{lista.telefoneResidencia}"/>
 				</p:column>
 				<p:column headerText="Bairro" style="width: 8%">
 					<h:outputLabel value="#{lista.id.logradouro.bairro}"/>
 				</p:column>
-				<p:column>
+				<p:column style="width: 5%; text-align:center">
 					<p:commandButton value="Selecionar" actionListener="#{beneficiadoBean.adicionar(lista)}" update="frmSocio"/>
 				</p:column>
-				<p:column style="width: 3%; text-align:center">
-					<h:commandLink
-						target="_blank">
-						<p:graphicImage library="images" name="fileprint.png" />
-					</h:commandLink>
-				</p:column>
-
 
 			</p:dataTable>
 			

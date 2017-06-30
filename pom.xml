@@ -113,19 +113,20 @@
 			<artifactId>poi</artifactId>
 			<version>3.13</version>
 		</dependency>
-		
+
 		<!-- OmniFaces -->
 		<dependency>
 			<groupId>org.omnifaces</groupId>
 			<artifactId>omnifaces</artifactId>
 			<version>1.11</version>
-	</dependency>
-	
-	<!-- Fontes jasper report -->
-	<dependency>
-    	<groupId>net.sf.jasperreports</groupId>
-    	<artifactId>jasperreports-fonts</artifactId>
-    <version>6.0.0</version>
-	</dependency>
+		</dependency>
+
+		<!-- Fontes jasper report -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>6.0.0</version>
+		</dependency>
+		
 	</dependencies>
 </project>

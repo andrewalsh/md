@@ -13,11 +13,9 @@ public class Logradouro {
 	private String uf;
 	private String cep;
 	
-	
 	public Logradouro() {
 		
 	}
-
 
 	public Logradouro(String endereco, String numero, String bairro, String cidade, String uf, String cep) {
 		super();
@@ -88,7 +86,6 @@ public class Logradouro {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-
 
 	@Override
 	public String toString() {

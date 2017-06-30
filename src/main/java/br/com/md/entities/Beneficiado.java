@@ -8,27 +8,44 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name="beneficiado")
 @NamedQueries({
 	@NamedQuery(name="Beneficiado.listar",query="from Beneficiado b"),
 	@NamedQuery(name="Beneficiado.buascarPorID",query="from Beneficiado b where b.id.nome=:nome and b.id.logradouro.endereco=:endereco"),
 	@NamedQuery(name="Beneficiado.buscarPorNome",query="from Beneficiado b where b.id.nome like:nome"),
-	@NamedQuery(name="Beneficiado.buscarPorBairro",query="from Beneficiado b where b.id.logradouro.bairro=:bairro")
+	@NamedQuery(name="Beneficiado.buscarPorBairro",query="from Beneficiado b where b.id.logradouro.bairro=:bairro"),
+	@NamedQuery(name="Beneficiado.listarBairros",query="SELECT DISTINCT b.id.logradouro.bairro from Beneficiado b"),
+	@NamedQuery(name="Beneficiado.listarTelefonesCelularesPorBairro",query="from Beneficiado b where b.telefoneCelular1 is not null "
+			+ "or b.telefoneCelular2 is not null and b.id.logradouro.bairro=:bairro"),
+	@NamedQuery(name="Beneficiado.listarTelefone1",query="from Beneficiado b where b.telefoneCelular1 is not null "
+			+ "and b.id.logradouro.bairro=:bairro"),
+	@NamedQuery(name="Beneficiado.listarTelefone2",query="from Beneficiado b where b.telefoneCelular2 is not null "
+			+ "and b.id.logradouro.bairro=:bairro")
 })
 public class Beneficiado implements Serializable{
 
+	@Transient
 	private static final long serialVersionUID = 1L;
 	private BeneficiadoID id;
 	private String cpf;
 	private String telefoneResidencia;
-	private String telefoneCelular;
+	private String telefoneCelular1;
+	private String telefoneCelular2;
 	private String sexo;
 	private Date nascimento;
+	private String telefone;
+	
+	@Transient
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 	
 	
 	@EmbeddedId
@@ -39,7 +56,7 @@ public class Beneficiado implements Serializable{
 		this.id = id;
 	}
 	
-	@Column(length=11)
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -54,11 +71,17 @@ public class Beneficiado implements Serializable{
 		this.telefoneResidencia = telefoneResidencia;
 	}
 	
-	public String getTelefoneCelular() {
-		return telefoneCelular;
+	public String getTelefoneCelular1() {
+		return telefoneCelular1;
 	}
-	public void setTelefoneCelular(String telefoneCelular) {
-		this.telefoneCelular = telefoneCelular;
+	public void setTelefoneCelular1(String telefoneCelular1) {
+		this.telefoneCelular1 = telefoneCelular1;
+	}
+	public String getTelefoneCelular2() {
+		return telefoneCelular2;
+	}
+	public void setTelefoneCelular2(String telefoneCelular2) {
+		this.telefoneCelular2 = telefoneCelular2;
 	}
 	
 	@Column(length=1)
@@ -104,8 +127,7 @@ public class Beneficiado implements Serializable{
 	@Override
 	public String toString() {
 		return "Beneficiado [id=" + id + ", cpf=" + cpf + ", telefoneResidencia=" + telefoneResidencia
-				+ ", telefoneCelular=" + telefoneCelular + ", sexo=" + sexo + ", nascimento=" + nascimento + "]";
+				+ ", telefoneCelular1=" + telefoneCelular1 + ", telefoneCelular2=" + telefoneCelular2 + ", sexo=" + sexo
+				+ ", nascimento=" + nascimento + ", telefone=" + telefone + "]";
 	}
-	
-
 }

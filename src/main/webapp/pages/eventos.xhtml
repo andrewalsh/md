@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			<f:event listener="#{eventoBean.listarEventos}" type="preRenderView"/>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmEvento">
+
+			<p:tabView id="viewSocio" activeIndex="0">
+				<p:tab title="Eventos">
+					<h:panelGrid columns="2" id="pnlSocio">
+					
+						<h:outputText value="Nome:"/>
+						<p:inputText  size="80" value="#{eventoBean.evento.nomeEvento}"/>
+
+						<h:outputText value="Data:" />
+						<p:calendar size="10" value="#{eventoBean.evento.dataEvento}"
+							locale="pt_BR" navigator="true" pattern="dd/MM/yyyy"
+							yearRange="1900:2020" />
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+			<h:panelGrid columns="4" id="pnlOpcao">
+				<p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{eventoBean.salvar}" update="msg"/>
+				<p:commandButton value="Atualizar" icon="ui-icon-disk" actionListener="#{eventoBean.atualizar}" update="msg :frmEvento"/>
+			</h:panelGrid>
+			<p:separator />
+			
+			<p:dataTable emptyMessage="Não há registros na lista"
+				paginator="true" rows="5" var="lista" id="tbl"
+				reflow="true" value="#{eventoBean.eventos}" >
+				<f:facet name="header">
+					Resultado da Pesquisa - <p:outputLabel value="#{beneficiadoBean.listaBeneficiado.size()} registro(s)"/>
+				</f:facet>
+
+				<p:column headerText="Evento"
+					style="width: 18%">
+					<h:outputLabel value="#{lista.nomeEvento}"/>
+				</p:column>
+				<p:column headerText="Data"
+					style="width: 8%; text-align:center">
+					<h:outputLabel value="#{lista.dataEvento}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputLabel>
+				</p:column>
+				
+				<p:column style="width: 5%; text-align:center">
+					<p:commandButton value="Selecionar" actionListener="#{eventoBean.adicionar(lista)}" update="frmEvento"/>
+				</p:column>
+
+			</p:dataTable>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

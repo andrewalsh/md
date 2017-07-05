@@ -59,11 +59,7 @@ public class Teste {
 					b.setNascimento(ManipulateDate.getDate(Integer.parseInt(row[11]), Integer.parseInt(row[10]),Integer.parseInt(row[9])));
 				}
 				
-				if(!row[12].equals("M") || !row[12].equals("F")){
-					b.setSexo(null);
-				}else{
-					 b.setSexo(row[12]);
-				}
+				b.setSexo(row[12]);
 				
 				if(row[1].startsWith("x") || row[1].length() > 11){
 					b.setCpf(null);
@@ -71,8 +67,8 @@ public class Teste {
 					b.setCpf(row[1].replaceAll("[-]", ""));
 				}
 				
-
-				b.setId(new BeneficiadoID(row[0], new Logradouro(row[3], row[4], row[5], null, row[8], row[6])));
+				//b.setId(new BeneficiadoID(nome, new Logradouro(endereco, numero, bairro, cidade, uf, cep)));
+				b.setId(new BeneficiadoID(row[0], new Logradouro(row[3], row[4], row[5], null, "RJ", row[6])));
 				b.setCpf(row[1].replaceAll("[-]", ""));
 				
 				lista.add(b);
@@ -81,28 +77,9 @@ public class Teste {
 			e.printStackTrace();
 		}
 		
-		boolean terminou = false;
-		int inicio = 0;
-		int fim = 500;
-		while(terminou == false){
-			if(lista.size() > 500){
-				int listaTamanho = lista.size();
-				
-				List<Beneficiado> sublista = new ArrayList<>();
-				sublista = lista.subList(inicio, fim);
-				for (Beneficiado beneficiado : sublista) {
-					System.out.println(beneficiado.toString());
-				}
-				System.out.println(sublista.size());
-				terminou = true;
-			}
-		}
-		
-		
-		
 		
 
-		/*for (Beneficiado beneficiado : lista) {
+		for (Beneficiado beneficiado : lista) {
 			BeneficiadoDAO dao = new BeneficiadoDAO();
 			//Beneficiado aux = new Beneficiado();
 			//System.out.println(beneficiado.toString());
@@ -115,7 +92,7 @@ public class Teste {
 				e.printStackTrace();
 				
 			}
-		}*/
+		}
 		//System.out.println("terminou");
 		
 	}

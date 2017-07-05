@@ -3,57 +3,30 @@ package md;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.facilitamovel.bean.Retorno;
-import br.com.facilitamovel.bean.SmsMultiplo;
-import br.com.facilitamovel.service.CheckCredit;
-import br.com.facilitamovel.service.SendMessage;
-
+import br.com.md.dao.BeneficiadoDAO;
+import br.com.md.dao.EventoDAO;
+import br.com.md.entities.Beneficiado;
+import br.com.md.entities.Evento;
 
 public class T2 {
 	
 	
 	public static void main(String[] args) throws Exception {
-		String usuario = "andrewalsh";
-		String senha = "Theo2014";
-		
-		//T2.simples(usuario, senha);
-		//T2.checkCredits(usuario, senha);
-	}
-	
-	public static String multiplos(String u, String s, List<String> lista1, List<String> lista2, String msg){
-		SmsMultiplo sms = new SmsMultiplo();
-		List<String> numeros1 = new ArrayList<String>();
-		List<String> numeros2 = new ArrayList<String>();
-		
-		sms.setUser(u);
-		sms.setPassword(s);
-		
-		numeros1 = lista1;
-		numeros2 = lista2;
-		
-		sms.setMessage(msg);
-		sms.setDestinatarios(numeros1);
-		sms.setDestinatarios(numeros2);
-		try {
-			Retorno retorno = SendMessage.multipleSend(sms);
-			
-			System.out.println("Codigo:" + retorno.getCodigo());
-			System.out.println("Descricao:" + retorno.getMensagem());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String nome = "David Kennedy Souza Araujo";
+		String primeiroNome = "";
+		for (int i=0;i<nome.length();i++){
+			if ((i==0) && (nome.substring(i, i+1).equalsIgnoreCase(" "))){
+				System.out.println("Erro: Nome digitado iniciado com tecla ESPAÇO.");
+				break;
+			}
+			else if (!nome.substring(i, i+1).equalsIgnoreCase(" ")){
+				primeiroNome += nome.substring(i, i+1);
+			}
+			else
+				break;
 		}
-		return "sucesso";
+		System.out.println(primeiroNome);
 	}
 	
 	
-	public static void checkCredits(String usuario, String senha) throws Exception {
-		try {
-			System.out.println(CheckCredit.checkRealCredit(usuario, senha));
-			
-		} catch (Exception e) {
-			//Possivelmente LOGIN INVALIDO
-			e.printStackTrace();
-		}
-	}
 }

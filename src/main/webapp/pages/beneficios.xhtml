@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			<f:event listener="#{beneficioBean.carregar}" type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmBeneficio">
+
+			<p:tabView id="viewBeneficio" activeIndex="0">
+				<p:tab title="Beneficios concedidos pela Ação Social">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Evento: "/>
+						<p:inputText value="#{beneficioBean.beneficio.evento}" size="40"/>
+						
+						<p:outputLabel value="Benefício: "/>
+						<p:inputText value="#{beneficioBean.beneficio.nomeBeneficio}" size="40"/>
+						
+						<p:outputLabel value="Responsável: "/>
+						<p:inputText value="#{beneficioBean.beneficio.responsável}" size="30"/>
+						
+						<p:outputLabel value="Data: "/>
+						<p:calendar value="#{beneficioBean.beneficio.dataBeneficio}" size="10">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</p:calendar>
+					</h:panelGrid>
+					<h:panelGrid>
+						<p:dataTable emptyMessage="Não há registros na lista"
+							paginator="true" rows="5" var="lista" id="tbl"
+							value="#{beneficioBean.beneficiados}">
+
+							<p:column headerText="Beneficiado" filterBy="#{lista.id.nome}"
+								style="width: 45%">
+								<p:outputLabel value="#{lista.id.nome}" />
+							</p:column>
+
+							<p:column headerText="Endereço | Nº | Bairro" style="width: 45%">
+								<p:outputLabel
+									value="#{lista.id.logradouro.endereco} | #{lista.id.logradouro.numero} | #{lista.id.logradouro.bairro}" />
+							</p:column>
+
+							<p:column style="width: 10%; text-align:center">
+								<p:commandButton value="Adicionar"
+									actionListener="#{beneficioBean.adicionar(lista)}"
+									update="frmBeneficio:viewBeneficio:tblSelecionado" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+
+					<p:separator />
+
+					<h:panelGrid>
+						<p:dataTable emptyMessage="Não há registros na lista"
+							paginator="true" rows="5" var="listaSelecionado"
+							id="tblSelecionado"
+							value="#{beneficioBean.beneficiadosSelecionados}">
+							<f:facet name="header">Beneficiados Selecionados</f:facet>
+							<p:column headerText="Beneficiado" filterBy="#{lista.id.nome}"
+								style="width: 45%">
+								<p:outputLabel value="#{listaSelecionado.id.nome}" />
+							</p:column>
+
+							<p:column headerText="Endereço | Nº | Bairro" style="width: 45%">
+								<p:outputLabel
+									value="#{listaSelecionado.id.logradouro.endereco} | #{listaSelecionado.id.logradouro.numero} | #{listaSelecionado.id.logradouro.bairro}" />
+							</p:column>
+
+							<p:column style="width: 10%; text-align:center">
+								<p:commandButton value="Remover"
+									actionListener="#{beneficioBean.remover(listaSelecionado)}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+					<p:separator/>
+					<h:panelGrid>
+						<p:commandButton value="Salvar" actionListener="#{beneficioBean.salvar}"/>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

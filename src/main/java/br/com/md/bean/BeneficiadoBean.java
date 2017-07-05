@@ -106,11 +106,17 @@ public class BeneficiadoBean implements Serializable{
 	
 	public void salvar(){
 		try {
+			Beneficiado aux = verificarChave();
 			BeneficiadoDAO dao = new BeneficiadoDAO();
 			populate();
 			beneficiado.setId(new BeneficiadoID(nome, new Logradouro(endereco, numero, bairro, cidade, uf, cep)));
-			dao.salvar(beneficiado);
-			FacesUtilBean.msgInfo("Beneficiado(a) cadastrado(a) com sucesso!");
+			if(aux == null){
+				dao.salvar(beneficiado);
+				FacesUtilBean.msgInfo("Beneficiado(a) cadastrado(a) com sucesso!");
+			}else{
+				FacesUtilBean.msgAlert("O beneficiado já possui cadastro no sistema! Se os dados não estiverem atualizados, atualize-os e clique no botão atualizar.");
+				this.beneficiado = aux;
+			}
 		} catch (RuntimeException e) {
 			FacesUtilBean.msgErro("Ocorreu um erro ao tentar cadastrar o(a) beneficiado(a): [ "+e.getMessage()+" ]");
 			e.printStackTrace();
@@ -133,12 +139,24 @@ public class BeneficiadoBean implements Serializable{
 		try {
 			BeneficiadoDAO dao = new BeneficiadoDAO();
 			this.beneficiado = null;
-			this.beneficiado = dao.buscarPorID(nome, endereco);
+			//this.beneficiado = dao.buscarPorID(nome, endereco);
 			if(!this.beneficiado.equals(null)){
 				FacesUtilBean.msgAlert("O(a) beneficiado(a) já possui cadastro no sistema! Verifique se os dados estão atualizados.");
 			}
 		} catch (RuntimeException e) {
 			FacesUtilBean.msgAlert("O(a) beneficiado(a) NÃO possui cadastro no sistema! Pode prosseguir com o cadastro");
+		}
+	}
+	
+	public void verificaSeExiste(){
+		BeneficiadoDAO dao = new BeneficiadoDAO();
+		//List<Beneficiado> beneficiados = new ArrayList<>();
+		
+		try {
+			listaBeneficiado = dao.verificaSeExiste(beneficiado.getId().getNome());
+			
+		} catch (RuntimeException e) {
+			// TODO: handle exception
 		}
 	}
 	
@@ -197,5 +215,13 @@ public class BeneficiadoBean implements Serializable{
 		}
 	}
 	
-
+	private Beneficiado verificarChave(){
+		BeneficiadoDAO dao = new BeneficiadoDAO();
+		Beneficiado aux = new Beneficiado();
+		try {
+			aux = dao.verificarChave(this.beneficiado.getId().getNome(), this.beneficiado.getId().getLogradouro().getEndereco(), this.beneficiado.getId().getLogradouro().getNumero());
+		} catch (RuntimeException e) {
+			FacesUtilBean.msgErro("Ocorreu um erro ao tentar evitar a duplicidade de cadastro! ERRO: [ "+e.getMessage()+" ]");
+		}return aux;
+	}
 }

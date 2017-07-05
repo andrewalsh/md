@@ -1,6 +1,5 @@
 package br.com.md.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -67,7 +66,6 @@ public class Logradouro {
 		this.cidade = cidade;
 	}
 
-	@Column(length=2)
 	public String getUf() {
 		return uf;
 	}
@@ -77,7 +75,6 @@ public class Logradouro {
 		this.uf = uf;
 	}
 
-	@Column(length=8)
 	public String getCep() {
 		return cep;
 	}

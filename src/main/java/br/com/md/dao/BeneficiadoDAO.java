@@ -43,13 +43,12 @@ public class BeneficiadoDAO {
 		}
 	}
 	
-	public Beneficiado buscarPorID(String nome, String endereco){
+	public Beneficiado buscarPorID(long idBeneficiado){
 		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
 		Beneficiado beneficiado = null;
 		try {
 			Query query = session.getNamedQuery("Beneficiado.buascarPorID");
-			query.setString("nome", nome);
-			query.setString("endereco", endereco);
+			query.setLong("idBeneficiado", idBeneficiado);
 			beneficiado = (Beneficiado) query.uniqueResult();
 		} catch (RuntimeException e) {
 			throw e;
@@ -147,6 +146,51 @@ public class BeneficiadoDAO {
 		}finally{
 			session.close();
 		}return bairros;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Beneficiado> verificaSeExiste(String nome){
+		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
+		List<Beneficiado> beneficiados = null;
+		try {
+			Query query = session.getNamedQuery("Beneficiado.verificaSeExiste");
+			query.setString("nome", nome);
+			beneficiados = query.list();
+		} catch (RuntimeException e) {
+			throw e;
+		}finally{
+			session.close();
+		}return beneficiados;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Beneficiado> listar(){
+		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
+		List<Beneficiado> beneficiados = null;
+		try {
+			Query query = session.getNamedQuery("Beneficiado.listar");
+			beneficiados = query.list();
+		} catch (RuntimeException e) {
+			throw e;
+		}finally{
+			session.close();
+		}return beneficiados;
+	}
+	
+	public Beneficiado verificarChave(String nome, String endereco, String numero){
+		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
+		Beneficiado beneficiado = null;
+		try {
+			Query query = session.getNamedQuery("Beneficiado.verificarChave");
+			query.setString("nome", nome);
+			query.setString("endereco", endereco);
+			query.setString("numero", numero);
+			beneficiado = (Beneficiado) query.uniqueResult();
+		} catch (RuntimeException e) {
+			throw e;
+		}finally{
+			session.close();
+		}return beneficiado;
 	}
 
 }

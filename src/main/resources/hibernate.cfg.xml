@@ -36,6 +36,7 @@
 		<property name="hbm2ddl.auto">update</property>
 		
 		<mapping class="br.com.md.entities.Beneficiado"/>
+		<mapping class="br.com.md.entities.Beneficio"/>
 		
 	</session-factory>
 

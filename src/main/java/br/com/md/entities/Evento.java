@@ -8,11 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Evento.listar",query="from Evento e"),
+	@NamedQuery(name="Evento.buscarPorCodigo",query="from Evento e where e.idEvento=:idEvento")
+})
 public class Evento implements Serializable{
 
 	@Transient
@@ -45,6 +51,7 @@ public class Evento implements Serializable{
 	public void setDataEvento(Date dataEvento) {
 		this.dataEvento = dataEvento;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

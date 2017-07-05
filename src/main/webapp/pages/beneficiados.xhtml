@@ -20,7 +20,9 @@
 					<h:panelGrid columns="2" id="pnlSocio">
 					
 						<h:outputText value="Nome:"/>
-						<p:inputText  size="40" value="#{beneficiadoBean.beneficiado.id.nome}"/>
+						<p:inputText  size="40" value="#{beneficiadoBean.beneficiado.id.nome}">
+							<p:ajax listener="#{beneficiadoBean.verificaSeExiste}" update="frmSocio:tbl"/>
+						</p:inputText>
 						
 						<h:outputText value="CPF:" />
 						<p:inputMask mask="999.999.999-99" size="15" value="#{beneficiadoBean.beneficiado.cpf}"/>
@@ -76,8 +78,8 @@
 
 			<h:panelGrid columns="4" id="pnlOpcao">
 
-				<p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{beneficiadoBean.salvar}" update="msg"/>
-
+				<p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{beneficiadoBean.salvar}" update="msg :frmSocio"/>
+				<p:commandButton value="Atualizar" icon="ui-icon-disk" actionListener="#{beneficiadoBean.atualizar}" update="msg"/>
 				
 					
 			</h:panelGrid>
@@ -103,21 +105,20 @@
 				</f:facet>
 
 				<p:column headerText="Nome"
-					style="width: 18%">
+					style="text-align:center">
 					<h:outputLabel value="#{lista.id.nome}"/>
 				</p:column>
-				<p:column headerText="Celular"
-					style="width: 8%; text-align:center">
-					<h:outputLabel value="#{lista.telefoneCelular1}"/>
+				<p:column headerText="Endereço"
+					style=" text-align:center">
+					<h:outputLabel value="#{lista.id.logradouro.endereco}"/>
 				</p:column>
-				<p:column headerText="Residencia"
-					style="width: 8%; text-align:center">
-					<h:outputLabel value="#{lista.telefoneResidencia}"/>
+				<p:column headerText="Número" style="width: 10%; text-align:center">
+					<h:outputLabel value="#{lista.id.logradouro.numero}"/>
 				</p:column>
-				<p:column headerText="Bairro" style="width: 8%">
+				<p:column headerText="Bairro" style="width: 10%; text-align:center">
 					<h:outputLabel value="#{lista.id.logradouro.bairro}"/>
 				</p:column>
-				<p:column style="width: 5%; text-align:center">
+				<p:column style="width: 10%; text-align:center">
 					<p:commandButton value="Selecionar" actionListener="#{beneficiadoBean.adicionar(lista)}" update="frmSocio"/>
 				</p:column>
 

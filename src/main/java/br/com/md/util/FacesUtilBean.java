@@ -5,6 +5,9 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import br.com.md.entities.Usuario;
 
 
 public class FacesUtilBean {
@@ -32,6 +35,15 @@ public class FacesUtilBean {
         Map<String,String> parametro = externalContext.getRequestParameterMap();
         String valor = parametro.get(nome);
         return valor;
+    }
+    
+    public Usuario usuarioLogado(){
+    	Usuario usuario = null;
+    	FacesContext facesContext =  FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		HttpSession session = (HttpSession) externalContext.getSession(true);
+		usuario = (Usuario) session.getAttribute("autenticacaoBean");
+		return usuario;
     }
 }
 

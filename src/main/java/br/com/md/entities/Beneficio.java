@@ -21,7 +21,7 @@ public class Beneficio implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private long idBeneficio;
 	private String nomeBeneficio;
-	private String responsável;
+	private String responsavel;
 	private String evento;
 	private Date dataBeneficio;
 	private Beneficiado beneficiado;
@@ -42,11 +42,11 @@ public class Beneficio implements Serializable{
 		this.nomeBeneficio = nomeBeneficio;
 	}
 	
-	public String getResponsável() {
-		return responsável;
+	public String getResponsavel() {
+		return responsavel;
 	}
-	public void setResponsável(String responsável) {
-		this.responsável = responsável;
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
 	}
 	
 	public String getEvento() {
@@ -95,6 +95,6 @@ public class Beneficio implements Serializable{
 	@Override
 	public String toString() {
 		return "Beneficio [idBeneficio=" + idBeneficio + ", nomeBeneficio=" + nomeBeneficio + ", responsável="
-				+ responsável + ", evento=" + evento + ", beneficiado=" + beneficiado + "]";
+				+ responsavel + ", evento=" + evento + ", beneficiado=" + beneficiado + "]";
 	}
 }

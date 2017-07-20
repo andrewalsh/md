@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-07-19T22:50:24 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Beneficios" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee12e1c4-353d-4587-a952-50e0c986e331">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="217"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="776"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MD_DB"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT md.beneficio.evento,
+	md.beneficio.`nomeBeneficio`,
+	md.beneficio.responsavel,
+	md.beneficio.`dataBeneficio`,
+	md.beneficiado.nome,
+	md.beneficiado.bairro
+FROM md.beneficio
+	INNER JOIN md.beneficiado ON 
+	 md.beneficio.`idBeneficiado` = md.beneficiado.`idBeneficiado` 
+ORDER BY md.beneficio.`nomeBeneficio` ASC,
+	md.beneficiado.bairro ASC]]>
+	</queryString>
+	<field name="evento" class="java.lang.String"/>
+	<field name="nomeBeneficio" class="java.lang.String"/>
+	<field name="responsavel" class="java.lang.String"/>
+	<field name="dataBeneficio" class="java.sql.Date"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{evento}]]></groupExpression>
+		<groupHeader>
+			<band height="34">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="34" forecolor="#666666" backcolor="#E6E6E6" uuid="66c9701b-454c-43be-b5cf-f3bad7848494"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16"/>
+					</textElement>
+					<text><![CDATA[Evento:]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="f25358f5-9e5b-428b-ad21-a405464ec25b"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{evento}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="33" width="555" height="1" forecolor="#666666" uuid="fc48568b-dc68-48cd-96b3-5b7a5005e693"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{nomeBeneficio}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="100" y="0" width="455" height="32" forecolor="#006699" uuid="6eaac306-2339-419e-9604-ef463d9d7c42"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nomeBeneficio}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="32" forecolor="#666666" uuid="b02f036b-ace2-47a1-9dc6-c09c41ca87cf"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16"/>
+					</textElement>
+					<text><![CDATA[Beneficio:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupExpression><![CDATA[$F{responsavel}]]></groupExpression>
+		<groupHeader>
+			<band height="34">
+				<textField>
+					<reportElement x="100" y="0" width="180" height="32" forecolor="#006699" uuid="4556b7fe-9c22-4312-bfb9-8f3a50b0bdb1"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="32" forecolor="#666666" uuid="4ff49506-8e55-4c21-a9d5-ce16755adb4d"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16"/>
+					</textElement>
+					<text><![CDATA[Responsavel:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="280" y="0" width="100" height="32" forecolor="#666666" uuid="3f40678d-0897-4924-8463-f6dbf6b5384b"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16"/>
+					</textElement>
+					<text><![CDATA[Data]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="340" y="2" width="214" height="32" forecolor="#006699" uuid="8bada63d-ae45-475d-8990-a1f05db70c87"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dataBeneficio}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group4">
+		<groupExpression><![CDATA[$F{dataBeneficio}]]></groupExpression>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="226577d0-6c12-4088-8f24-5447b942af6e"/>
+				<staticText>
+					<reportElement x="20" y="20" width="554" height="43" forecolor="#FFFFFF" uuid="ad2bb20e-e748-439f-8b65-0b673115d298"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Benefícios por Ação Social]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="2">
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" forecolor="#666666" uuid="777d22f8-916e-4ad9-aad1-9f6273a07b4c"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="51">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="27" width="339" height="20" uuid="a7b85f8e-9b92-4eaf-8009-351c76ba9888"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="339" y="27" width="215" height="20" uuid="a14bd1e3-c52b-42c6-86a8-771ad481f9b4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="3" width="339" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="2a79ce0a-9d23-4e91-8863-593caa063ea7"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Beneficiado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="340" y="3" width="215" height="21" forecolor="#006699" backcolor="#E6E6E6" uuid="787bc5ec-8a74-4ead-b10f-f1f77461697e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bairro]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="6613744e-0b53-421f-9a30-9d6cd6251228"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="1648c3dc-4e0f-48ef-83d6-b32f5ed3474c"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c232e946-836a-4174-ad9a-1ca354a56efc"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

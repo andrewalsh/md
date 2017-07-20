@@ -3,8 +3,11 @@ package md;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.exolab.castor.types.Date;
 
 import br.com.md.dao.BeneficiadoDAO;
 import br.com.md.entities.Beneficiado;
@@ -13,18 +16,22 @@ import br.com.md.entities.Logradouro;
 import br.com.md.entities.Usuario;
 import br.com.md.util.ManipulateDate;
 
-public class Teste {
+public class Teste2 {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("C:/doc/doc2.csv"));
+		BufferedReader br = new BufferedReader(new FileReader("C:/doc/Cadastros.csv"));
 		String linha = "";
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		List<Beneficiado> lista = new ArrayList<>();
 		try {
 			while ((linha = br.readLine()) != null) {
 				Beneficiado b = new Beneficiado();
 				String[] row = linha.split(";");
-				String auxtelefone = row[5];
+				
+				//b.setNascimento(formato.parse(row[0]));
+				//b.setTelefoneCelular1(row[1]);
+				String auxtelefone = row[6];
 				String telefone = "";
 				
 				telefone = auxtelefone.replace(" ", "").replaceAll("[-]", "");
@@ -54,23 +61,14 @@ public class Teste {
 					b.setTelefoneResidencia(null);
 				}
 				
-				if(row[9].equals("0")){
-					b.setNascimento(null);
-				}else{
-					b.setNascimento(ManipulateDate.getDate(Integer.parseInt(row[9]), Integer.parseInt(row[8]),Integer.parseInt(row[7])));
-				}
+				b.setNascimento(formato.parse(row[7]));
 				
 				b.setSexo(null);
 				
-				if(row[1].startsWith("x") || row[1].length() > 11){
-					b.setCpf(null);
-				}else{
-					b.setCpf(row[1].replaceAll("[-]", ""));
-				}
+				b.setCpf(null);
 				
 				//b.setId(new BeneficiadoID(nome, new Logradouro(endereco, numero, bairro, cidade, uf, cep)));
-				b.setId(new BeneficiadoID(row[0], new Logradouro(row[1], row[2], row[3], null, "RJ", row[4])));
-				b.setCpf(null);
+				b.setId(new BeneficiadoID(row[0].toUpperCase(), new Logradouro(row[1].toUpperCase(), row[2].toUpperCase(), row[3].toUpperCase(), row[4], "RJ", row[5])));
 				
 				lista.add(b);
 			}
@@ -94,15 +92,14 @@ public class Teste {
 				if(aux == null){
 					dao.salvar(beneficiado);
 					System.out.println(beneficiado.toString());
-					System.out.println(i);
 				}
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 				
 			}
 		}
-		System.out.println("terminou");
+		System.out.println(lista.size());
+		//System.out.println("terminou");
 		
 	}
-
 }

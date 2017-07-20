@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
@@ -18,6 +20,8 @@ import javax.persistence.Transient;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Beneficiado.listar",query="from Beneficiado b"),
+	@NamedQuery(name="Beneficiado.listarPrimeiroNome",query="select b.id.nome from Beneficiado b"),
+	@NamedQuery(name="Beneficiado.listarPrimeiroNomePorBairro",query="select b.id.nome from Beneficiado b where b.id.logradouro.bairro=:bairro"),
 	@NamedQuery(name="Beneficiado.buascarPorID",query="from Beneficiado b where b.idBeneficiado=:idBeneficiado"),
 	@NamedQuery(name="Beneficiado.buscarPorNome",query="from Beneficiado b where b.id.nome like:nome"),
 	@NamedQuery(name="Beneficiado.buscarPorBairro",query="from Beneficiado b where b.id.logradouro.bairro=:bairro"),
@@ -44,7 +48,7 @@ public class Beneficiado implements Serializable{
 	private String sexo;
 	private Date nascimento;
 	private String telefone;
-	
+	private Usuario cadastradoPor;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -113,6 +117,15 @@ public class Beneficiado implements Serializable{
 	}
 	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name="cadstradoPor",referencedColumnName="idUsuario",nullable=false)
+	public Usuario getCadastradoPor() {
+		return cadastradoPor;
+	}
+	public void setCadastradoPor(Usuario cadastradoPor) {
+		this.cadastradoPor = cadastradoPor;
 	}
 	
 	@Override

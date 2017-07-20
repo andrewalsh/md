@@ -17,9 +17,15 @@ public class BeneficioDAO {
 		try {
 			transaction = session.beginTransaction();
 			for (int i = 0; i < beneficiados.size(); i++) {
+				Beneficio b = new Beneficio();
 				Beneficiado beneficiado = beneficiados.get(i);
-				beneficio.setBeneficiado(beneficiado);
-				session.save(beneficio);
+				
+				b.setDataBeneficio(beneficio.getDataBeneficio());
+				b.setEvento(beneficio.getEvento());
+				b.setNomeBeneficio(beneficio.getNomeBeneficio());
+				b.setResponsavel(beneficio.getResponsavel());
+				b.setBeneficiado(beneficiado);
+				session.save(b);
 			}
 			transaction.commit();
 		} catch (RuntimeException e) {

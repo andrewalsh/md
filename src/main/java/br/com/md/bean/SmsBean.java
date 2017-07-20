@@ -103,6 +103,8 @@ public class SmsBean implements Serializable {
 			beneficiados1 = dao1.listarTelefonesCelular1(this.bairro);
 			beneficiados2 = dao1.listarTelefonesCelular2(this.bairro);
 			this.totalTelefones = beneficiados1.size() + beneficiados2.size();
+			if(this.totalTelefones > smsDisponivel)
+				FacesUtilBean.msgAlert("Atenção! A lista selecionada contém mais telefones que a quantidade de SMSs disponíveis!");
 		} catch (RuntimeException e) {
 			FacesUtilBean.msgErro("Ocorreu um erro ao gerar a listagem de celulares! ERRO: [ " + e.getMessage() + " ]");
 		}

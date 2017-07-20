@@ -15,7 +15,7 @@
 }
 
 .cabecalho{
-	background-image: linear-gradient(to bottom,#ff3333,#cc0000);
+	background-image: linear-gradient(to bottom,#1e94d2,#3232cd);
 	
 	position: fixed;
 	top: 0;
@@ -37,6 +37,9 @@
 	overflow: auto;
 }
 
+.logout{
+	float: right;
+}
 
 body {
 	margin: 0;

@@ -17,7 +17,7 @@
 
 			<p:tabView id="viewBeneficio" activeIndex="0">
 				<p:tab title="Beneficios concedidos pela Ação Social">
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="4">
 						<p:outputLabel value="Evento: "/>
 						<p:inputText value="#{beneficioBean.beneficio.evento}" size="40"/>
 						
@@ -25,10 +25,10 @@
 						<p:inputText value="#{beneficioBean.beneficio.nomeBeneficio}" size="40"/>
 						
 						<p:outputLabel value="Responsável: "/>
-						<p:inputText value="#{beneficioBean.beneficio.responsável}" size="30"/>
+						<p:inputText value="#{beneficioBean.beneficio.responsavel}" size="30"/>
 						
 						<p:outputLabel value="Data: "/>
-						<p:calendar value="#{beneficioBean.beneficio.dataBeneficio}" size="10">
+						<p:calendar value="#{beneficioBean.beneficio.dataBeneficio}" size="10" locale="pt_BR" pattern="dd/MM/yyyy">
 							<f:convertDateTime pattern="dd/MM/yyyy"/>
 						</p:calendar>
 					</h:panelGrid>

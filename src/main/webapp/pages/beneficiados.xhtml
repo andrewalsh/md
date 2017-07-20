@@ -9,7 +9,7 @@
 <ui:composition template="/templates/new_template.xhtml">
 	<ui:define name="metatada">
 		<f:metadata>
-			
+			<f:event listener="#{beneficiadoBean.listar}" type="preRenderView"/>
 		</f:metadata>
 	</ui:define>
 	<ui:define name="conteudo">
@@ -17,7 +17,7 @@
 
 			<p:tabView id="viewSocio" activeIndex="0">
 				<p:tab title="Beneficiados">
-					<h:panelGrid columns="2" id="pnlSocio">
+					<h:panelGrid columns="4" id="pnlSocio">
 					
 						<h:outputText value="Nome:"/>
 						<p:inputText  size="40" value="#{beneficiadoBean.beneficiado.id.nome}">
@@ -76,13 +76,6 @@
 						
 			</p:tabView>
 
-			<h:panelGrid columns="4" id="pnlOpcao">
-
-				<p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{beneficiadoBean.salvar}" update="msg :frmSocio"/>
-				<p:commandButton value="Atualizar" icon="ui-icon-disk" actionListener="#{beneficiadoBean.atualizar}" update="msg"/>
-				
-					
-			</h:panelGrid>
 			<p:separator />
 			
 			<h:panelGrid columns="5">
@@ -105,7 +98,7 @@
 				</f:facet>
 
 				<p:column headerText="Nome"
-					style="text-align:center">
+					style="text-align:center" filterBy="#{lista.id.nome}">
 					<h:outputLabel value="#{lista.id.nome}"/>
 				</p:column>
 				<p:column headerText="Endereço"
@@ -115,7 +108,7 @@
 				<p:column headerText="Número" style="width: 10%; text-align:center">
 					<h:outputLabel value="#{lista.id.logradouro.numero}"/>
 				</p:column>
-				<p:column headerText="Bairro" style="width: 10%; text-align:center">
+				<p:column headerText="Bairro" style="width: 10%; text-align:center" filterBy="#{lista.id.logradouro.bairro}">
 					<h:outputLabel value="#{lista.id.logradouro.bairro}"/>
 				</p:column>
 				<p:column style="width: 10%; text-align:center">

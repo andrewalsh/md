@@ -102,8 +102,9 @@ public class BeneficioBean implements Serializable {
 
 		this.beneficiadosSelecionados.add(beneficiado);
 
-		for (Beneficiado b : beneficiadosSelecionados) {
-			System.out.println(b.toString());
+		System.out.println(beneficiadosSelecionados.size());
+		for (Beneficiado bene : beneficiadosSelecionados) {
+			System.out.println(bene.toString());
 		}
 	}
 

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			<f:event listener="#{consultaBean.listarBairros}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmConsulta">
+
+			<p:tabView id="viewConsulta" activeIndex="0">
+				<p:tab title="Consulta">
+					<h:panelGrid columns="4">
+						<p:outputLabel value="Pesquisar por bairro" />
+						<p:selectOneMenu value="#{consultaBean.parametro}" filter="true">
+							<f:selectItem itemLabel="Selecione..." itemValue="selecione" />
+							<f:selectItem itemLabel="Todos" itemValue="todos" />
+							<f:selectItems value="#{consultaBean.bairros}" var="bairro"
+								itemValue="#{bairro}" itemLabel="#{bairro}" />
+						</p:selectOneMenu>
+						<p:commandButton value="Pesquisar"
+							actionListener="#{consultaBean.listar}"
+							update=":msg :frmConsulta:viewConsulta:tblSelecionado" />
+
+						<h:commandLink id="excel">
+							<p:graphicImage library="images" name="excel.png" title="Exportar Excel"
+								rendered="#{consultaBean.bairros.size() gt 0}"/>
+							<p:dataExporter type="xls" target="tblSelecionado" fileName="nomes" />
+						</h:commandLink>
+					</h:panelGrid>
+					<p:separator />
+					<h:panelGrid>
+						<p:dataTable emptyMessage="Não há registros na lista"
+							paginator="true" rows="20" var="listaSelecionado"
+							id="tblSelecionado" value="#{consultaBean.primeiroNome}">
+							<f:facet name="header">Beneficiados Selecionados</f:facet>
+							<p:column headerText="Beneficiado" exportable="true"
+								style="width: 45%">
+								<p:outputLabel value="#{listaSelecionado}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

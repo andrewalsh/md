@@ -104,8 +104,20 @@ public class BeneficiadoBean implements Serializable{
 	}
 	
 	
+	public void listar(){
+		try {
+			BeneficiadoDAO dao = new BeneficiadoDAO();
+			listaBeneficiado = dao.listar();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			FacesUtilBean.msgErro("Ocorreu um erro ao gerar a lista dos Beneficiados cadastrados! ERRO: [ "+e.getMessage()+" ]");
+		}
+	}
+	
 	public void salvar(){
 		try {
+			FacesUtilBean bean = new FacesUtilBean();
+			this.beneficiado.setCadastradoPor(bean.usuarioLogado());
 			Beneficiado aux = verificarChave();
 			BeneficiadoDAO dao = new BeneficiadoDAO();
 			populate();
@@ -134,6 +146,7 @@ public class BeneficiadoBean implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public void verificarID(){
 		try {

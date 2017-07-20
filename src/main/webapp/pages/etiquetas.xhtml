@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			<f:event listener="#{smsBean.listarBairros}" type="preRenderView"/>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmSms">
+
+			<p:tabView id="viewSms" activeIndex="0">
+				<p:tab title="Impressão de Etiquetas">
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Selecione o bairro" />
+						<p:selectOneMenu value="#{etiquetaBean.bairro}" filter="true">
+							<f:selectItem itemLabel="Selecione..." itemValue=""/>
+							<f:selectItems value="#{smsBean.bairros}"
+								var="bairro" itemValue="#{bairro}" itemLabel="#{bairro}"/>
+						</p:selectOneMenu>
+						<h:commandLink target="_blank"
+							actionListener="#{etiquetaBean.imprimir}">
+							<p:graphicImage library="images" name="impressora.png" width="30"
+								title="Gerar Relatório" />
+						</h:commandLink>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

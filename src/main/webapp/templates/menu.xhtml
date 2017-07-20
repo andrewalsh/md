@@ -2,23 +2,33 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
-	
+
 	<h:form>
-				<p:panelMenu id="menuPrincipal">
-					<p:submenu label="Cadastros">
-						<p:menuitem value="Beneficiados"
-							outcome="/pages/beneficiados.xhtml"/>
-							
-						<p:menuitem value="Eventos"
-							outcome="/pages/eventos.xhtml"/>
-					</p:submenu>
+		<p:panelMenu id="menuPrincipal">
+			<p:submenu label="Cadastros">
+				<p:menuitem value="Beneficiados" outcome="/pages/beneficiados.xhtml" />
 
-					<p:submenu label="SMS">
-						<p:menuitem value="Enviar SMS"
-							outcome="/pages/sendsms.xhtml"/>
-					</p:submenu>
+				<p:menuitem value="Beneficios" outcome="/pages/beneficios.xhtml" />
+			</p:submenu>
 
-				</p:panelMenu>
-			</h:form>
-	
+			<p:submenu label="SMS">
+				<p:menuitem value="Enviar SMS" outcome="/pages/sendsms.xhtml" />
+			</p:submenu>
+			
+			<p:submenu label="Usuarios">
+				<p:menuitem value="Editar Senha" outcome="/pages/editarSenha.xhtml" />
+				<p:menuitem value="Gerenciar" outcome="/pages/usuarios.xhtml" />
+			</p:submenu>
+			
+			<p:submenu label="Consultas">
+				<p:menuitem value="Nomes por Bairro" outcome="/pages/consultas.xhtml" />
+			</p:submenu>
+			
+			<p:submenu label="Relatórios">
+				<p:menuitem value="Gerar Etiquetas" outcome="/pages/etiquetas.xhtml" />
+				<p:menuitem value="Ação Social" outcome="/pages/acaosocial.xhtml" />
+			</p:submenu>
+		</p:panelMenu>
+	</h:form>
+
 </ui:composition>

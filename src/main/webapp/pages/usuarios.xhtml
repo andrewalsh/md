@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			<f:event listener="#{usuarioBean.listar}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmUsuario" >
+
+			<p:tabView>
+				<p:tab title="Usuários">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Nome:"/>
+						<p:inputText value="#{usuarioBean.novoUsuario.nome}"/>
+						
+						<h:outputText value="CPF:" />
+						<p:inputMask mask="999.999.999-99" value="#{usuarioBean.novoUsuario.login}"/>
+						
+						<p:outputLabel value="Ativo:"/>
+						<p:selectOneMenu value="#{usuarioBean.novoUsuario.ativo}">
+							<f:selectItem itemLabel="Selecione..."/>
+							<f:selectItem itemLabel="Ativo" itemValue="true"/>
+							<f:selectItem itemLabel="Inativo" itemValue="false"/>
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+			<h:panelGrid columns="4">
+				<p:commandButton value="Novo" icon="ui-icon-disk"
+					update=":frmUsuario" actionListener="#{usuarioBean.novo}" />
+				<p:commandButton value="Salvar" icon="ui-icon-disk"
+					update=":frmUsuario :msg" actionListener="#{usuarioBean.salvar}" />
+				<p:commandButton value="Atualizar" icon="ui-icon-pencil"
+					update=":frmUsuario :msg" actionListener="#{usuarioBean.editar}" />
+					
+			</h:panelGrid>
+			<p:separator/>
+			<p:dataTable emptyMessage="Não existem registros na lista" paginator="true" rows="10"
+				var="usuario" id="tbl" value="#{usuarioBean.usuarios}">
+				
+				<f:facet name="header">
+					Usuários Cadastrados - <p:outputLabel value="#{usuarioBean.usuarios.size()} registro(s)"/>
+				</f:facet>
+				
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{usuario.nome}"/>
+				</p:column>
+				<p:column headerText="CPF">
+					<p:outputLabel value="#{usuario.login}"/>
+				</p:column>
+				<p:column headerText="Ativo?">
+					<p:graphicImage library="images" name="true.jpg" width="25" title="Ativo" rendered="#{usuario.ativo eq true}"/>
+					<p:graphicImage library="images" name="false.png" width="25" title="Inativo" rendered="#{usuario.ativo eq false}"/>
+				</p:column>
+				<p:column>
+					<p:commandButton value="Selecionar" actionListener="#{usuarioBean.adicionar(usuario)}" update="frmUsuario"/>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

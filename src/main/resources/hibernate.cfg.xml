@@ -37,7 +37,7 @@
 		
 		<mapping class="br.com.md.entities.Beneficiado"/>
 		<mapping class="br.com.md.entities.Beneficio"/>
-		
+		<mapping class="br.com.md.entities.Usuario"/>
 	</session-factory>
 
 </hibernate-configuration>

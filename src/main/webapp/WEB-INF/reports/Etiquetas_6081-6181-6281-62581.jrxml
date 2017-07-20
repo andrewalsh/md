@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-07-19T11:19:55 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Etiquetas" columnCount="3" pageWidth="816" pageHeight="1056" columnWidth="258" leftMargin="20" rightMargin="20" topMargin="48" bottomMargin="20" uuid="5f1b15aa-9361-4ea2-9fe5-ffb9b28885b7">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MD_DB"/>
+	<parameter name="ETIQUETA_BAIRRO" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT md.beneficiado.nome,
+	md.beneficiado.endereco,
+	md.beneficiado.numero,
+	md.beneficiado.bairro,
+	md.beneficiado.cep,
+	md.beneficiado.cidade,
+	md.beneficiado.uf
+FROM md.beneficiado
+where md.beneficiado.bairro = $P{ETIQUETA_BAIRRO}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="cep" class="java.lang.String"/>
+	<field name="cidade" class="java.lang.String"/>
+	<field name="uf" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="97" splitType="Stretch">
+			<rectangle>
+				<reportElement x="3" y="0" width="250" height="90" uuid="524744e2-77e7-48ae-87e4-1fbdc58fdca7">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="10" y="5" width="240" height="20" uuid="334d9958-95a2-445d-a3ee-d53bd415c839"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="25" width="240" height="24" uuid="7d5a6833-5716-43d8-8941-2f7ee05c72dd"/>
+				<textFieldExpression><![CDATA[$F{endereco}+","+$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="67" width="210" height="20" uuid="c89188e5-2714-4305-94ad-5a258ca91e57"/>
+				<textFieldExpression><![CDATA[$F{cep}+" | "+$F{cidade}+" | "+$F{uf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="67" width="30" height="20" uuid="f7d34d4a-9c5a-465f-9087-636820c42425"/>
+				<text><![CDATA[CEP: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="49" width="240" height="18" uuid="b393ea21-5ad1-4911-bb7c-3072d5458dbf"/>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

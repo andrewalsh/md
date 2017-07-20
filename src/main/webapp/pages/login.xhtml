@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<p:dialog visible="true" resizable="false" closable="false"
+			draggable="false" modal="false" appendTo="@(body)"
+			widgetVar="frmLogin" header="MD - [Sistema de Mala Direta] - [Login]">
+			<h:form>
+				<h:panelGrid columns="2">
+
+					<h:outputText value="CPF:" />
+					<p:inputMask mask="999.999.999-99" size="30"
+						value="#{usuarioBean.usuario.login}" />
+
+					<h:outputText value="Senha:" />
+					<p:password size="30" value="#{usuarioBean.usuario.senha}"
+						placeholder="Se for CPF apenas números" />
+				</h:panelGrid>
+				<h:panelGrid columns="4">
+					<p:commandButton value="Login" action="#{usuarioBean.autenticar}"
+						icon="ui-icon-document" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

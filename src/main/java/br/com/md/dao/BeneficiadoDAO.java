@@ -177,6 +177,35 @@ public class BeneficiadoDAO {
 		}return beneficiados;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<String> listarPrimeiroNomePorBairro(String bairro){
+		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
+		List<String> beneficiados = null;
+		try {
+			Query query = session.getNamedQuery("Beneficiado.listarPrimeiroNomePorBairro");
+			query.setString("bairro", bairro);
+			beneficiados = query.list();
+		} catch (RuntimeException e) {
+			throw e;
+		}finally{
+			session.close();
+		}return beneficiados;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> listarPrimeiroNome(){
+		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
+		List<String> beneficiados = null;
+		try {
+			Query query = session.getNamedQuery("Beneficiado.listarPrimeiroNome");
+			beneficiados = query.list();
+		} catch (RuntimeException e) {
+			throw e;
+		}finally{
+			session.close();
+		}return beneficiados;
+	}
+	
 	public Beneficiado verificarChave(String nome, String endereco, String numero){
 		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
 		Beneficiado beneficiado = null;

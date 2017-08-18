@@ -149,6 +149,20 @@ public class BeneficiadoDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<String> listarRuasCadastrados(){
+		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
+		List<String> ruas = null;
+		try {
+			Query query = session.getNamedQuery("Beneficiado.listarRuas");
+			ruas = query.list();
+		} catch (RuntimeException e) {
+			throw e;
+		}finally{
+			session.close();
+		}return ruas;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Beneficiado> verificaSeExiste(String nome){
 		Session session = HibernateUtil.getFabricaDeSessoes().openSession();
 		List<Beneficiado> beneficiados = null;

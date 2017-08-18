@@ -103,6 +103,11 @@ public class BeneficiadoBean implements Serializable{
 		this.valorCampo = valorCampo;
 	}
 	
+	public void novo(){
+		this.beneficiado = new Beneficiado();
+		this.beneficiado.setId(new BeneficiadoID());
+		this.beneficiado.getId().setLogradouro(new Logradouro());
+	}
 	
 	public void listar(){
 		try {
@@ -125,6 +130,7 @@ public class BeneficiadoBean implements Serializable{
 			if(aux == null){
 				dao.salvar(beneficiado);
 				FacesUtilBean.msgInfo("Beneficiado(a) cadastrado(a) com sucesso!");
+				novo();
 			}else{
 				FacesUtilBean.msgAlert("O beneficiado já possui cadastro no sistema! Se os dados não estiverem atualizados, atualize-os e clique no botão atualizar.");
 				this.beneficiado = aux;
@@ -141,6 +147,7 @@ public class BeneficiadoBean implements Serializable{
 			populate();
 			dao.editar(beneficiado);
 			FacesUtilBean.msgInfo("Dados cadastrais do(a) beneficiado(a) atualizados com sucesso!");
+			novo();
 		} catch (RuntimeException e) {
 			FacesUtilBean.msgErro("Ocorreu um erro ao tentar atualizar o cadastro do(a) beneficiado(a): [ "+e.getMessage()+" ]");
 			e.printStackTrace();

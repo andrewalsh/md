@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-19T11:19:55 -->
+<!-- 2017-07-30T20:14:45 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Etiquetas" columnCount="3" pageWidth="816" pageHeight="1056" columnWidth="258" leftMargin="20" rightMargin="20" topMargin="48" bottomMargin="20" uuid="5f1b15aa-9361-4ea2-9fe5-ffb9b28885b7">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MD_DB"/>
 	<parameter name="ETIQUETA_BAIRRO" class="java.lang.String"/>
+	<parameter name="ETIQUETA_ENDERECO" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT md.beneficiado.nome,
 	md.beneficiado.endereco,
@@ -14,7 +15,8 @@
 	md.beneficiado.cidade,
 	md.beneficiado.uf
 FROM md.beneficiado
-where md.beneficiado.bairro = $P{ETIQUETA_BAIRRO}]]>
+where md.beneficiado.bairro = $P{ETIQUETA_BAIRRO}
+or md.beneficiado.endereco = $P{ETIQUETA_ENDERECO}]]>
 	</queryString>
 	<field name="nome" class="java.lang.String"/>
 	<field name="endereco" class="java.lang.String"/>

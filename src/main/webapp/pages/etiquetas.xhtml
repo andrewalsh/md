@@ -9,20 +9,38 @@
 <ui:composition template="/templates/new_template.xhtml">
 	<ui:define name="metatada">
 		<f:metadata>
-			<f:event listener="#{smsBean.listarBairros}" type="preRenderView"/>
+			<f:event listener="#{etiquetaBean.listar}" type="preRenderView"/>
 		</f:metadata>
 	</ui:define>
 	<ui:define name="conteudo">
 		<h:form id="frmSms">
 
 			<p:tabView id="viewSms" activeIndex="0">
-				<p:tab title="Impressão de Etiquetas">
+				<p:tab title="Impressão de Etiquetas por Bairro">
 					<h:panelGrid columns="3">
 						<p:outputLabel value="Selecione o bairro" />
 						<p:selectOneMenu value="#{etiquetaBean.bairro}" filter="true">
 							<f:selectItem itemLabel="Selecione..." itemValue=""/>
-							<f:selectItems value="#{smsBean.bairros}"
+							<f:selectItems value="#{etiquetaBean.bairros}"
 								var="bairro" itemValue="#{bairro}" itemLabel="#{bairro}"/>
+						</p:selectOneMenu>
+						<h:commandLink target="_blank"
+							actionListener="#{etiquetaBean.imprimir}">
+							<p:graphicImage library="images" name="impressora.png" width="30"
+								title="Gerar Relatório" />
+						</h:commandLink>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+			
+			<p:tabView id="viewEtiqueta" activeIndex="0">
+				<p:tab title="Impressão de Etiquetas por Rua">
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Selecione a Rua" />
+						<p:selectOneMenu value="#{etiquetaBean.rua}" filter="true">
+							<f:selectItem itemLabel="Selecione..." itemValue=""/>
+							<f:selectItems value="#{etiquetaBean.ruas}"
+								var="rua" itemValue="#{rua}" itemLabel="#{rua}"/>
 						</p:selectOneMenu>
 						<h:commandLink target="_blank"
 							actionListener="#{etiquetaBean.imprimir}">

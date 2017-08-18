@@ -37,6 +37,7 @@
 		
 		<mapping class="br.com.md.entities.Beneficiado"/>
 		<mapping class="br.com.md.entities.Beneficio"/>
+		<mapping class="br.com.md.entities.BeneficioConcedido"/>
 		<mapping class="br.com.md.entities.Usuario"/>
 	</session-factory>
 

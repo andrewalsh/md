@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/new_template.xhtml">
+	<ui:define name="metatada">
+		<f:metadata>
+			<f:event listener="#{beneficioConcedidoBean.listar}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmBeneficio">
+			<p:tabView id="viewBeneficio" activeIndex="0">
+				<p:tab title="Beneficios concedidos pela Ação Social"
+					id="tabBeneficio">
+					<h:panelGrid columns="2" id="pnlBeneficio">
+						<p:outputLabel value="Ação Social" />
+						<p:inputText
+							value="#{beneficioConcedidoBean.beneficioConcedido.evento}"
+							size="40" />
+
+						<p:outputLabel value="Responsável" />
+						<p:inputText
+							value="#{beneficioConcedidoBean.beneficioConcedido.responsavel}"
+							size="20" />
+
+						<p:outputLabel value="Benefícios" />
+						<p:selectManyCheckbox id="basic"
+							value="#{beneficioConcedidoBean.beneficiosEscolhidos}"
+							converter="beneficioConverter">
+							<f:selectItems value="#{beneficioConcedidoBean.beneficios}"
+								var="lista" itemLabel="#{lista.nomeBeneficio}"
+								itemValue="#{lista}" />
+						</p:selectManyCheckbox>
+					</h:panelGrid>
+					<h:panelGrid>
+						<p:dataTable emptyMessage="Não há registros na lista"
+							paginator="true" rows="15" var="lista" id="tbl"
+							value="#{beneficioConcedidoBean.beneficiados}">
+							<f:facet name="header">
+								<p:commandButton value="Novo Cadastro" icon="ui-icon-disk"
+									oncomplete="PF('dlgBeneficiado').show();" />
+							</f:facet>
+
+							<p:column headerText="Nome" filterBy="#{lista.id.nome} ">
+								<h:outputLink id="fade" value="#">
+									<h:outputText value="#{lista.id.nome} " />
+								</h:outputLink>
+								<p:tooltip id="toolTipFade" for="fade" value="#{lista.sexo}"
+									position="top">
+									<h:panelGrid columns="2">
+										<h:outputText value="CPF:" />
+										<p:outputLabel value="#{lista.cpf}" />
+
+										<p:outputLabel value="Nascimento:" />
+										<p:outputLabel value="#{lista.nascimento}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</p:outputLabel>
+
+										<h:outputText value="Sexo:" />
+										<p:outputLabel value="#{lista.sexo}" />
+
+										<h:outputText value="Tel. Celular1:" />
+										<p:outputLabel value="#{lista.telefoneCelular1}" />
+
+										<h:outputText value="Tel. Celular2:" />
+										<p:outputLabel value="#{lista.telefoneCelular2}" />
+
+										<h:outputText value="Tel. Residêncial:" />
+										<p:outputLabel value="#{lista.telefoneResidencia}" />
+
+										<h:outputText value="Endereço:" />
+										<p:outputLabel value="#{lista.id.logradouro.endereco}" />
+
+										<h:outputText value="Número:" />
+										<p:outputLabel value="#{lista.id.logradouro.numero}" />
+
+										<h:outputText value="Bairro:" />
+										<p:outputLabel value="#{lista.id.logradouro.bairro}" />
+
+										<h:outputText value="CEP:" />
+										<p:outputLabel value="#{lista.id.logradouro.cep}" />
+
+										<h:outputText value="Cidade:" />
+										<p:outputLabel value="#{lista.id.logradouro.cidade}" />
+
+										<h:outputText value="Estado:" />
+										<p:outputLabel value="#{lista.id.logradouro.uf}" />
+									</h:panelGrid>
+								</p:tooltip>
+							</p:column>
+
+							<p:column style="width:13%; text-align:center">
+								<p:commandButton value="Alterar Cadastro"
+									actionListener="#{beneficioConcedidoBean.adicionarBeneficiado(lista)}"
+									oncomplete="PF('dlgBeneficiadoEditar').show();"
+									update="frmDlg2" />
+							</p:column>
+
+							<p:column style="width:14%; text-align:center">
+								<p:commandButton value="Salvar Beneficio(s)"
+									actionListener="#{beneficioConcedidoBean.salvarComBeneficiadoCadastrado(lista)}"
+									update=":msg :frmBeneficio" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+
+		<p:dialog appendTo="@(body)" closable="false" closeOnEscape="true"
+			draggable="false" modal="true" position="center" resizable="false"
+			widgetVar="dlgBeneficiado" id="dlg">
+			<h:form id="frmDlg">
+				<h:panelGrid columns="4">
+					<h:outputText value="Nome:" />
+					<p:inputText size="40"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.nome}">
+						<p:ajax listener="#{beneficiadoBean.verificaSeExiste}"
+								update="frmDlg" />	
+					</p:inputText>
+
+					<h:outputText value="CPF:" />
+					<p:inputMask mask="999.999.999-99" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.cpf}" />
+
+					<h:outputText value="Nascimento:" />
+					<p:calendar size="10"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.nascimento}"
+						locale="pt_BR" navigator="true" pattern="dd/MM/yyyy"
+						yearRange="1900:2020" />
+
+					<h:outputText value="Sexo:" />
+					<p:selectOneMenu
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.sexo}">
+						<f:selectItem itemLabel="Selecione..." />
+						<f:selectItem itemLabel="Feminino" itemValue="F" />
+						<f:selectItem itemLabel="Masculino" itemValue="M" />
+					</p:selectOneMenu>
+
+					<h:outputText value="Tel. Celular1:" />
+					<p:inputMask mask="99999-9999" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.telefoneCelular1}" />
+
+					<h:outputText value="Tel. Celular2:" />
+					<p:inputMask mask="99999-9999" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.telefoneCelular2}" />
+
+					<h:outputText value="Tel. Residêncial:" />
+					<p:inputMask mask="9999-9999" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.telefoneResidencia}" />
+
+					<h:outputText value="Endereço Residencial:" />
+					<p:inputText size="50"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.endereco}" />
+
+					<h:outputText value="Número:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.numero}" />
+
+					<h:outputText value="Bairro:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.bairro}" />
+
+					<h:outputText value="CEP:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.cep}" />
+
+					<h:outputText value="Cidade:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.cidade}" />
+
+					<h:outputText value="Estado:" />
+					<p:selectOneMenu
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.uf}">
+						<f:selectItem itemLabel="Selecione..." />
+						<f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<p:separator/>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar" icon="ui-icon-disk"
+						actionListener="#{beneficioConcedidoBean.salvar}"
+						update=":msg :frmBeneficio"
+						oncomplete="PF('dlgBeneficiado').hide();" />
+					<p:commandButton value="Fechar"
+						oncomplete="PF('dlgBeneficiado').hide();" icon="ui-icon-cancel" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog appendTo="@(body)" closable="false" closeOnEscape="true"
+			draggable="false" modal="true" position="center" resizable="false"
+			widgetVar="dlgBeneficiadoEditar" id="dlg2">
+			<h:form id="frmDlg2">
+				<h:panelGrid columns="4">
+					<h:outputText value="Nome:" />
+					<p:inputText size="40"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.nome}" />
+
+					<h:outputText value="CPF:" />
+					<p:inputMask mask="999.999.999-99" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.cpf}" />
+
+					<h:outputText value="Nascimento:" />
+					<p:calendar size="10"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.nascimento}"
+						locale="pt_BR" navigator="true" pattern="dd/MM/yyyy"
+						yearRange="1900:2020" />
+
+					<h:outputText value="Sexo:" />
+					<p:selectOneMenu
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.sexo}">
+						<f:selectItem itemLabel="Selecione..." />
+						<f:selectItem itemLabel="Feminino" itemValue="F" />
+						<f:selectItem itemLabel="Masculino" itemValue="M" />
+					</p:selectOneMenu>
+
+					<h:outputText value="Tel. Celular1:" />
+					<p:inputMask mask="99999-9999" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.telefoneCelular1}" />
+
+					<h:outputText value="Tel. Celular2:" />
+					<p:inputMask mask="99999-9999" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.telefoneCelular2}" />
+
+					<h:outputText value="Tel. Residêncial:" />
+					<p:inputMask mask="9999-9999" size="15"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.telefoneResidencia}" />
+
+					<h:outputText value="Endereço Residencial:" />
+					<p:inputText size="50"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.endereco}" />
+
+					<h:outputText value="Número:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.numero}" />
+
+					<h:outputText value="Bairro:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.bairro}" />
+
+					<h:outputText value="CEP:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.cep}" />
+
+					<h:outputText value="Cidade:" />
+					<p:inputText size="20"
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.cidade}" />
+
+					<h:outputText value="Estado:" />
+					<p:selectOneMenu
+						value="#{beneficioConcedidoBean.beneficioConcedido.beneficiado.id.logradouro.uf}">
+						<f:selectItem itemLabel="Selecione..." />
+						<f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<p:separator/>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar" icon="ui-icon-disk"
+						actionListener="#{beneficioConcedidoBean.editarBeneficiadoComCadastroDeBeneficios}"
+						update=":msg :frmBeneficio"
+						oncomplete="PF('dlgBeneficiadoEditar').hide();" />
+					<p:commandButton value="Fechar"
+						oncomplete="PF('dlgBeneficiadoEditar').hide();"
+						icon="ui-icon-cancel" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

@@ -2,6 +2,7 @@ package br.com.md.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,6 +28,7 @@ import javax.persistence.Transient;
 	@NamedQuery(name="Beneficiado.buscarPorNome",query="from Beneficiado b where b.id.nome like:nome"),
 	@NamedQuery(name="Beneficiado.buscarPorBairro",query="from Beneficiado b where b.id.logradouro.bairro=:bairro"),
 	@NamedQuery(name="Beneficiado.listarBairros",query="SELECT DISTINCT b.id.logradouro.bairro from Beneficiado b"),
+	@NamedQuery(name="Beneficiado.listarRuas",query="SELECT DISTINCT b.id.logradouro.endereco from Beneficiado b"),
 	@NamedQuery(name="Beneficiado.listarTelefonesCelularesPorBairro",query="from Beneficiado b where b.telefoneCelular1 is not null "
 			+ "or b.telefoneCelular2 is not null and b.id.logradouro.bairro=:bairro"),
 	@NamedQuery(name="Beneficiado.listarTelefone1",query="from Beneficiado b where b.telefoneCelular1 is not null "
@@ -49,6 +52,7 @@ public class Beneficiado implements Serializable{
 	private Date nascimento;
 	private String telefone;
 	private Usuario cadastradoPor;
+	private List<Beneficio> beneficios;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -126,6 +130,14 @@ public class Beneficiado implements Serializable{
 	}
 	public void setCadastradoPor(Usuario cadastradoPor) {
 		this.cadastradoPor = cadastradoPor;
+	}
+	
+	@ManyToMany
+	public List<Beneficio> getBeneficios() {
+		return beneficios;
+	}
+	public void setBeneficios(List<Beneficio> beneficios) {
+		this.beneficios = beneficios;
 	}
 	
 	@Override
